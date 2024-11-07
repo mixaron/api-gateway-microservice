@@ -1,0 +1,35 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: reservation-service
+          uri: lb://reservation-service
+          predicates:
+            - Path=/reservation/**
+          filters:
+            - AuthenticationFilter
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+#          filters:
+#            - AuthenticationFilter
+    discovery:
+      locator:
+        enabled: true
+        lower-case-service-id: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+debug: true
+
+jwt:
+  secret: s7gH1MvYz@HsG98M4n2D3FgH9Z2r1J6Kz2S8d9H0J

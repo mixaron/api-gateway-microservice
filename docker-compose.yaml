@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  api-gateway:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-server
+    networks:
+      - my-network
+    environment:
+      - SERVICE_URL_DEFAULT_ZONE=http://eureka:8761/eureka/
+
+networks:
+  my-network:
+    driver: bridge

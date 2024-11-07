@@ -1,6 +1,15 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'IMAGE_TAG', defaultValue: 'v1.0', description: 'Tag for the Docker image')
+    }
+
+    tools {
+        maven 'Maven 3.8.6'
+        dockerTool 'Docker'
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -21,7 +30,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    bat 'docker build -t mixaron/api-gateway-service:v1.0 .'
+                    bat "docker build -t mixaron/api-gateway-service:${params.IMAGE_TAG} ."
                 }
             }
         }
@@ -30,7 +39,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-hub-credentials', url: '') {
-                        bat 'docker push mixaron/api-gateway-service:v1.0'
+                        bat "docker push mixaron/api-gateway-service:${params.IMAGE_TAG}"
                     }
                 }
             }

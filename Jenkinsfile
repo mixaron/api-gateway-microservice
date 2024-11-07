@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-hub-credentials', url: '') {
-                        sh 'docker push your-dockerhub-repo/api-gateway:latest'
+                        sh 'docker push mixaron/api-gateway-service:v1.0'
                     }
                 }
             }

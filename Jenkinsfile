@@ -6,7 +6,7 @@ pipeline {
     }
 
     tools {
-        maven 'Maven 3.8.6'
+        maven 'Maven 3.9.9'
         dockerTool 'Docker'
     }
 

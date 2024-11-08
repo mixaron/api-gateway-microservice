@@ -4,11 +4,29 @@ services:
     build: .
     ports:
       - "8090:8090"
+    depends_on:
+      - db
     networks:
       - my-network
     environment:
       - SERVICE_URL_DEFAULT_ZONE=http://eureka:8761/eureka/
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123123
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 networks:
   my-network:
     driver: bridge
+
+volumes:
+  postgres_data:
